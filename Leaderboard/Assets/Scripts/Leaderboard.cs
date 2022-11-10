@@ -16,10 +16,10 @@ public class Leaderboard : MonoBehaviour
     public void OnLoggedIn ()
     {
         leaderboardCanvas.SetActive(true);
-        SetLeaderboardEntry(-7360);
-        //DisplayLeaderboard();
+        DisplayLeaderboard();
     }
 
+    // send a new entry to the leaderboard
     public void SetLeaderboardEntry (int newScore)
     {
         ExecuteCloudScriptRequest request = new ExecuteCloudScriptRequest
@@ -48,6 +48,7 @@ public class Leaderboard : MonoBehaviour
         );
     }
 
+    // updates the leaderboard UI elements
     void UpdateLeaderboardUI (List<PlayerLeaderboardEntry> leaderboard)
     {
         for(int x = 0; x < leaderboardEntries.Length; x++)
@@ -58,7 +59,7 @@ public class Leaderboard : MonoBehaviour
                 continue;
 
             leaderboardEntries[x].transform.Find("PlayerName").GetComponent<TextMeshProUGUI>().text = (leaderboard[x].Position + 1) + ". " + leaderboard[x].DisplayName;
-            leaderboardEntries[x].transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = (-(float)leaderboard[x].StatValue + 0.001f).ToString("F2");
+            leaderboardEntries[x].transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = (-(float)leaderboard[x].StatValue * 0.001f).ToString("F2");
         }
     }
 }
